@@ -1,5 +1,3 @@
-# rubytictactoe
-
 <h1>The Odin Project</h1>
 <h2>Object-Oriented Programming with Ruby: Project 1</h2>
 
