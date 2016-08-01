@@ -5,7 +5,7 @@ class Game
     puts "Welcome to Ruby Tic-Tac-Toe. Here is your grid:"
     @player_one = Player.new("Player 1", "X")
     @player_two = Player.new("Player 2", "O")
-    @@turns = 1
+    @@turns = 0
     game_start
   end
 
@@ -19,13 +19,13 @@ class Game
     begin
       place_marker
       @board.print_board
-      @@turns += 1
     end until @@turns == 10 || game_won?
     puts "#{current_player.name} has won!"
     @board.print_board
   end
 
   def place_marker
+    @@turns += 1
     begin
       marker = choose_quadrant
     end until @board.cell[marker][1] != ("X" || "O")
