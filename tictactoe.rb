@@ -20,26 +20,32 @@ class Game
 			place_marker
 			@board.print_board
 			@@turns += 1
-		end until @@turns == 9
-	end
-
-	def choose_quadrant
-		begin
-			puts "Where will you place your marker, #{alternator.name}?"
-			quadrant  = gets.chomp.to_i - 1
-		end until quadrant >= 0 && quadrant < 9
-		quadrant
+		end until @@turns == 10 || game_won?
+		puts "#{current_player.name} has won!"
+		@board.print_board
 	end
 
 	def place_marker
 		begin
 			marker = choose_quadrant
 		end until @board.cell[marker][1] != ("X" || "O")
-		@board.cell[marker] = [marker, "#{alternator.marker}"]
+		@board.cell[marker] = [marker, "#{current_player.marker}"]
 	end
 
-	def alternator
-		current_player = (@@turns % 2 == 0 ? @player_two : @player_one)
+	def choose_quadrant
+		begin
+			puts "Where will you place your marker, #{current_player.name}?"
+			quadrant  = gets.chomp.to_i - 1
+		end until quadrant >= 0 && quadrant < 9
+		quadrant
+	end
+
+	def current_player
+		@@turns % 2 == 0 ? @player_two : @player_one
+	end
+
+	def game_won?
+		(@board.horizontal_win? || @board.vertical_win?) || @board.diagonal_win?
 	end
 end
 
@@ -67,6 +73,43 @@ class Board
 		puts "---+---+---"
 		puts " #{@cell[6][1]} | #{@cell[7][1]} | #{@cell[8][1]} "
 		puts ""
+	end
+
+def horizontal_win?
+		case
+		when @cell[0][1] == (@cell[1][1] && @cell[2][1])
+			return TRUE
+		when @cell[0][1] == (@cell[1][1] && @cell[2][1])
+			return TRUE
+		when @cell[0][1] == (@cell[1][1] && @cell[2][1])
+			return TRUE
+		else
+			return FALSE
+		end
+	end
+
+	def vertical_win?
+		case
+		when @cell[0][1] == (@cell[3][1] && @cell[6][1])
+			return TRUE
+		when @cell[1][1] == (@cell[5][1] && @cell[7][1])
+			return TRUE
+		when @cell[2][1] == (@cell[6][1] && @cell[8][1])
+			return TRUE
+		else 
+			return FALSE
+		end
+	end
+
+	def diagonal_win?
+		case
+		when @cell[0][1] == (@cell[4][1] && @cell[8][1])
+			return TRUE
+		when @cell[2][1] == (@cell[4][1] && @cell[6][1])
+			return TRUE
+		else
+			return FALSE
+		end
 	end
 end
 
