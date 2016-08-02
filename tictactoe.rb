@@ -2,7 +2,7 @@ class Game
   attr_reader :player_one, :player_two
 
   def initialize
-    puts "Welcome to Ruby Tic-Tac-Toe. Here is your grid:"
+    puts "Welcome to Ruby Tic-Tac-Toe!"
     @player_one = Player.new("Player 1", "X")
     @player_two = Player.new("Player 2", "O")
     @@turns = 0
@@ -19,7 +19,7 @@ class Game
     begin
       place_marker
       @board.print_board
-    end until @@turns == 10 || game_won?
+    end until @@turns == 10 || @board.won_game?
     puts "#{current_player.name} has won!"
     @board.print_board
   end
@@ -42,10 +42,6 @@ class Game
 
   def current_player
     @@turns % 2 == 0 ? @player_two : @player_one
-  end
-
-  def game_won?
-    (@board.horizontal_win? || @board.vertical_win?) || @board.diagonal_win?
   end
 end
 
@@ -76,34 +72,20 @@ class Board
     puts ""
   end
 
-  def horizontal_win?
+  def won_game?
     case
     when @cell[0][1] == (@cell[1][1] && @cell[2][1])
       return TRUE
-    when @cell[0][1] == (@cell[1][1] && @cell[2][1])
+    when @cell[3][1] == (@cell[4][1] && @cell[5][1])
       return TRUE
-    when @cell[0][1] == (@cell[1][1] && @cell[2][1])
+    when @cell[6][1] == (@cell[7][1] && @cell[8][1])
       return TRUE
-    else
-      return FALSE
-    end
-  end
-
-  def vertical_win?
-    case
     when @cell[0][1] == (@cell[3][1] && @cell[6][1])
       return TRUE
-    when @cell[1][1] == (@cell[5][1] && @cell[7][1])
+    when @cell[1][1] == (@cell[4][1] && @cell[7][1])
       return TRUE
-    when @cell[2][1] == (@cell[6][1] && @cell[8][1])
+    when @cell[2][1] == (@cell[5][1] && @cell[8][1])
       return TRUE
-    else
-      return FALSE
-    end
-  end
-
-  def diagonal_win?
-    case
     when @cell[0][1] == (@cell[4][1] && @cell[8][1])
       return TRUE
     when @cell[2][1] == (@cell[4][1] && @cell[6][1])
