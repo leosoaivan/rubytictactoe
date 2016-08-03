@@ -1,5 +1,4 @@
 class Game
-
   def initialize
     @player_one = Player.new("Player 1", "X")
     @player_two = Player.new("Player 2", "O")
