@@ -73,7 +73,6 @@ class Game
     @@turns = 0
     game_start
   end
-
 end
 
 class Player
@@ -125,7 +124,6 @@ class Board
       return FALSE
     end
   end
-
 end
 
 x = Game.new
