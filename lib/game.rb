@@ -50,11 +50,11 @@ class Game
   end
 
   def end_message
-  	if @board.won_game? == TRUE
-  	  puts " #{current_player.name} has won!"
-  	else
-  	  puts "The game has ended in a draw!"
-  	end
+    if @board.won_game? == TRUE
+      puts " #{current_player.name} has won!"
+    else
+      puts "The game has ended in a draw!"
+    end
     restart_query
   end
 
@@ -73,10 +73,7 @@ class Game
   end
 
   def game_restart
-  	@@turns = 0
-  	game_start
+    @@turns = 0
+    game_start
   end
-
 end
-
-x = Game.new
