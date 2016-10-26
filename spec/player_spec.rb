@@ -2,27 +2,29 @@ require 'player.rb'
 
 describe Player do
 
-  subject do
-    Player.new(:name, :marker)
+  describe "#initialize" do
+    context "given two parameters" do
+      it "creates a new player" do
+        expect(Player.new("Leo", "X")).to be_an_instance_of(Player)
+      end
+    end
+    context "given other number of parameters" do
+      it "returns an error" do
+        expect{ Player.new() }.to raise_error(StandardError)
+      end
+    end
   end
 
-  it { is_expected.to respond_to(:name, :marker) }
-  it { is_expected.not_to respond_to(:length, :flatten) }
+  describe "#name" do
+    it "returns Player's name" do
+      expect(Player.new("Leo", "X").name).to eql("Leo")
+    end
+  end
 
-  # it "validates presence of :name" do
-  #   expect(subject).to validates_presence_of(name)
-  # end
-  #
-  # it "validates presence of :marker" do
-  #   expect(subject).to validates_presence_of(marker)
-  # end
-
-
-  # describe "#new" do
-  #   it "takes 2 parameters and creates a Player object" do
-  #     expect( subject ).to be_an_instance_of ( Player )
-  #   end
-  # end
-
+  describe "#marker" do
+    it "returns Player's marker" do
+      expect(Player.new("Michiko", "O").marker).to eql("O")
+    end
+  end
 
 end
