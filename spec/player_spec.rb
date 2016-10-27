@@ -2,15 +2,15 @@ require 'player.rb'
 
 describe Player do
 
-  describe "#initialize" do
-    context "given two parameters" do
-      it "creates a new player" do
+  describe "#new" do
+    context "with two parameters" do
+      it "creates a new Player" do
         expect(Player.new("Leo", "X")).to be_an_instance_of(Player)
       end
     end
-    context "given other number of parameters" do
+    context "with other number of parameters" do
       it "returns an error" do
-        expect{ Player.new() }.to raise_error(StandardError)
+        expect{ Player.new("Leo") }.to raise_error(ArgumentError)
       end
     end
   end
