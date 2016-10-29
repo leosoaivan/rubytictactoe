@@ -1,23 +1,28 @@
-require 'game.rb'
+require './lib/game.rb'
 
 describe Game do
-  let (:game) { Game.new }
 
   describe "#new" do
-    it "creates a new Game" do
-      expect(game).to be_an_instance_of(Game)
-    end
-  end
+    it "creates an instance of Game" do
+      player1 = double('player')
+      player2 = double('player')
 
-  describe "#player_one" do
-    it "it is an instance of Player" do
-      expect(game.player_one).to be_an_instance_of(Player)
+      expect(Game.new(player1, player2)).to be_an_instance_of(Game)
     end
-    it "returns a name" do
-      expect(game.player_one.name).to eql("Player 1")
+
+    context "given two players" do
+      it "does not raise an ArgumentError" do
+        player1 = double('player')
+        player2 = double('player')
+        expect {Game.new(player1, player2)}.not_to raise_error
+      end
     end
-    it "returns a marker" do
-      expect(game.player_one.marker).to eql("X")
+
+    context "given one player" do
+      it "raises an ArgumentError" do
+        player1 = double('player')
+        expect {Game.new(player1)}.to raise_error(ArgumentError)
+      end
     end
   end
 

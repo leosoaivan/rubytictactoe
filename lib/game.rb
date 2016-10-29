@@ -1,12 +1,12 @@
-require 'board.rb'
-require 'player.rb'
+require_relative './board.rb'
+require_relative './player.rb'
 
 class Game
   attr_accessor :player_one, :player_two, :turns
 
-  def initialize
-    @player_one = Player.new("Player 1", "X")
-    @player_two = Player.new("Player 2", "O")
+  def initialize(player_one, player_two)
+    @player_one = player_one
+    @player_two = player_two
     @@turns = 0
   end
 
@@ -78,5 +78,3 @@ class Game
     game_start
   end
 end
-
-# x = Game.new.game_start
