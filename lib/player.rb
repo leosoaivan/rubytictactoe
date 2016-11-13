@@ -1,8 +1,8 @@
 class Player
-  attr_reader :name, :marker
+  attr_accessor :name, :marker
 
-  def initialize(name, marker)
-    @name = name
-    @marker = marker
+  def initialize( options = {} )
+    self.name = options[:name]
+    self.marker = options[:marker]
   end
 end
