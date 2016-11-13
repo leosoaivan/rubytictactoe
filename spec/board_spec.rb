@@ -2,33 +2,48 @@ require 'board.rb'
 
 describe Board do
 
+  describe "attributes" do
+    it "allows reading from :cell" do
+      cell = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      expect(subject.cell).to match_array(cell)
+    end
+
+    it "allows writing to :cell" do
+      subject.cell[0] = "X"
+      expect(subject.cell[0]).to eq("X")
+    end
+  end
+
   describe "#new" do
     it "creates a new Board" do
       expect(subject).to be_an_instance_of(Board)
     end
   end
 
-  describe "#cell" do
-    it "returns an Array" do
-      expect(subject.cell).to be_an_instance_of(Array)
+  describe "#won?" do
+    it "returns true if a horizontal row matches" do
+      subject.cell[0] = "X"
+      subject.cell[1] = "X"
+      subject.cell[2] = "X"
+      expect(subject).to be_won
     end
-    it "returns a coordinate" do
-      expect(subject.cell[0]).to eql([0,1])
+    it "returns true if a vertical row matches" do
+      subject.cell[0] = "X"
+      subject.cell[3] = "X"
+      subject.cell[6] = "X"
+      expect(subject).to be_won
     end
-  end
-
-  describe "#won_game?" do
-    it "returns True if a row matches" do
-      subject.cell[0][1] = "X"
-      subject.cell[1][1] = "X"
-      subject.cell[2][1] = "X"
-      expect(subject.won_game?).to be(true)
+    it "returns true if a diagonal row matches" do
+      subject.cell[0] = "X"
+      subject.cell[4] = "X"
+      subject.cell[8] = "X"
+      expect(subject).to be_won
     end
-    it "returns False if a row doesn't match" do
-      subject.cell[0][1] = "X"
-      subject.cell[1][1] = "O"
-      subject.cell[2][1] = "X"
-      expect(subject.won_game?).to be(false)
+    it "returns false if there is no match" do
+      subject.cell[0] = "X"
+      subject.cell[4] = "O"
+      subject.cell[8] = "X"
+      expect(subject).not_to be_won
     end
   end
 end
