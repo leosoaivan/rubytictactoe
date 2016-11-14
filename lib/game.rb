@@ -2,17 +2,17 @@ require_relative './board.rb'
 require_relative './player.rb'
 
 class Game
-  attr_accessor :player_one, :player_two, :turns
+  attr_accessor :player_one, :player_two, :board, :turns
 
-  def initialize(player_one, player_two)
-    @player_one = player_one
-    @player_two = player_two
+  def initialize
+    @player_one = Player.new("Player 1", "X")
+    @player_two = Player.new("Player 2", "O")
+    @board = Board.new
     @@turns = 0
   end
 
   def game_start
     start_message
-    @board = Board.new
     @board.print_board
     game_loop
   end
@@ -40,9 +40,9 @@ class Game
 
   def choose_quadrant
     begin
-      puts "Where will you place your marker, #{current_player.name}?"
+      print "Where will you place your marker, #{current_player.name}? \n"
       quadrant  = gets.chomp.to_i - 1
-    end until quadrant >= 0 && quadrant < 9
+    end until quadrant.between?(0, 8)
     quadrant
   end
 

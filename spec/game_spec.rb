@@ -2,52 +2,40 @@ require './lib/game.rb'
 
 describe Game do
 
-  let(:player_one) { double('player') }
-  let(:player_two) { double('player') }
-  let(:game) { Game.new(:player_one, :player_two) }
-  let(:board) { Board.new }
+  let (:game) { Game.new }
 
   describe "attributes" do
     it "allows reading and writing for :player_one" do
-      game.player_one = "Leo"
-      expect(game.player_one).to eql("Leo")
+      dbl = double("Player One")
+      subject.player_one = dbl
+      expect(subject.player_one).to eq(dbl)
     end
+
     it "allows reading and writing for :turns" do
-      game.turns = 7
-      expect(game.turns).to eql(7)
+      subject.turns = 7
+      expect(subject.turns).to eq(7)
     end
   end
 
-  # describe "#new" do
-  #   it "creates an instance of Game" do
-  #     expect(game).to be_an_instance_of(Game)
-  #   end
-  #
-  #   context "given two players" do
-  #     it "does not raise an ArgumentError" do
-  #       expect {game}.not_to raise_error
-  #     end
-  #   end
-  #
-  #   context "given one player" do
-  #     it "raises an ArgumentError" do
-  #       expect {Game.new(player1)}.to raise_error(ArgumentError)
-  #     end
-  #   end
-  # end
-  #
-  # describe "#game_start" do
-  #   it "displays a board" do
-  #     expect(board.print_board)
-  #   end
-  # end
-  #
-  # describe "#start_message" do
-  #   it "displays a welcome message" do
-  #     expect(game.start_message)
-  #   end
-  # end
-  #
-  # describe "#game_loop" do
+  describe "#new" do
+    it "creates an instance of Board" do
+      expect(subject.board).to be_an_instance_of(Board)
+    end
 
+    it "creates an instance of Player" do
+      expect(subject.player_one).to be_an_instance_of(Player)
+    end
+  end
+
+  describe "#choose_quadrant" do
+    it "allows user to choose a quadrant" do
+      allow(subject).to receive(:gets).and_return("8")
+      expect(subject.choose_quadrant).to eq(7)
+    end
+
+    it "loops until a valid quadrant is chosen" do
+      allow(subject).to receive(:gets).and_return("10", "11", "2")
+      expect(subject.choose_quadrant).to eq(1)
+    end
+  end
 end
