@@ -2,20 +2,16 @@ require 'player.rb'
 
 describe Player do
 
-  describe "attributes" do
-    it "allows reading & writing to :name" do
-      subject.name = "Leo"
-      expect(subject.name).to eq("Leo")
-    end
-    it "allows reading & writing to :marker" do
-      subject.marker = "X"
-      expect(subject.marker).to eq("X")
-    end
-  end
+  let (:player) { Player.new("Leo", "X") }
 
-  describe "#new" do
-    it "creates an instance of Player" do
-      expect(subject).to be_an_instance_of(Player)
+  describe "attributes" do
+    it "allows reading from :name" do
+      expect(player.name).to eq("Leo")
+    end
+
+    it "allows writing to :name" do
+      player.name = "Michiko"
+      expect(player.name).to eq("Michiko")
     end
   end
 
