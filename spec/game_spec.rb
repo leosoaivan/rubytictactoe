@@ -1,8 +1,6 @@
-require './lib/game.rb'
+require 'game.rb'
 
 describe Game do
-
-  let (:game) { Game.new }
 
   describe "attributes" do
     it "allows reading and writing for :player_one" do
@@ -38,4 +36,24 @@ describe Game do
       expect(subject.choose_quadrant).to eq(1)
     end
   end
+
+  describe "#add_turn" do
+    it "increments the turn count by 1" do
+      subject.turns = 0
+      subject.add_turn
+      expect(subject.turns).to eq(1)
+    end
+  end
+
+  describe "#current_player" do
+    it "switches to Player 1 on odd turns" do
+      subject.turns = 1
+      expect(subject.current_player).to eq(subject.player_one)
+    end
+    it "switches to Player 2 on even turns" do
+      subject.turns = 232
+      expect(subject.current_player).to eq(subject.player_two)
+    end
+  end
+
 end

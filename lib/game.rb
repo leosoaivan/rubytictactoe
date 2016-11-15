@@ -8,13 +8,15 @@ class Game
     @player_one = Player.new("Player 1", "X")
     @player_two = Player.new("Player 2", "O")
     @board = Board.new
-    @@turns = 0
+    @turns = 0
   end
 
   def game_start
     start_message
     @board.print_board
     game_loop
+    end_message
+    restart_query
   end
 
   def start_message
@@ -26,44 +28,46 @@ class Game
     begin
       place_marker
       @board.print_board
-    end until @@turns == 9 || @board.won_game? == TRUE
-    end_message
+    end until @turns == 9 || @board.won? == TRUE
   end
 
   def place_marker
-    @@turns += 1
     begin
-      marker = choose_quadrant
-    end until @board.cell[marker][1] != "X" && @board.cell[marker][1] != "O"
-    @board.cell[marker] = [marker, "#{current_player.marker}"]
+      quadrant = choose_quadrant
+    end until @board.cell[quadrant] != "X" && @board.cell[quadrant] != "O"
+    @board.cell[quadrant] = "#{current_player.marker}"
+  end
+
+  def add_turn
+    @turns += 1
   end
 
   def choose_quadrant
     begin
-      print "Where will you place your marker, #{current_player.name}? \n"
-      quadrant  = gets.chomp.to_i - 1
+      print "Where will you place your marker, #{current_player.name}? "
+      quadrant = gets.chomp.to_i - 1
     end until quadrant.between?(0, 8)
     quadrant
   end
 
   def current_player
-    @@turns % 2 == 0 ? @player_two : @player_one
+    @turns % 2 == 0 ? @player_two : @player_one
   end
 
   def end_message
-    if @board.won_game? == TRUE
-      puts " #{current_player.name} has won!"
+    if @board.won? == TRUE
+      puts "#{current_player.name} has won!"
     else
       puts "The game has ended in a draw!"
     end
-    restart_query
   end
 
   def restart_query
-    puts "Would you like to play again? Y/N"
+    print "Would you like to play again? Y/N? "
     decision = gets.chomp.upcase
     case decision
     when "Y"
+      system "clear"
       game_restart
     when "N"
       puts "Goodbye!"
@@ -73,8 +77,12 @@ class Game
     end
   end
 
+  def reset_counter
+    @turns = 0
+  end
+
   def game_restart
-    @@turns = 0
+    reset_counter
     game_start
   end
 end
