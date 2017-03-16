@@ -1,7 +1,6 @@
 require_relative './board.rb'
-require_relative './player.rb'
 require_relative './game.rb'
 
-x = Game.new
+new_game = Game.new(:board => Board.new)
 
-x.game_start
+new_game.game_start
